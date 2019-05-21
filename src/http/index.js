@@ -1,3 +1,4 @@
+// 导入所有接口
 import apis from './interface'
 
 const install = Vue => {
