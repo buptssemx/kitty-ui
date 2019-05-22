@@ -6,8 +6,9 @@ import Home from '@/views/Home'
 import Main from '../views/Main.vue';
 import User from "../views/User.vue";
 import Menu from "../views/Menu.vue";
-
-
+import Dept from "../views/Dept";
+import Role from "../views/Role";
+import Log from "../views/Log";
 
 
 
@@ -20,9 +21,12 @@ const router = new Router({
       name: '首页',
       component: Home,
       children:[
-        {path:'/main',component:Main,name:"系统介绍"},
+        {path:'',component:Main,name:"系统介绍"},
         {path:'/user',component:User,name:"用户管理"},
         {path:'/menu',component:Menu,name:"菜单管理"},
+        {path:'/role',component:Role,name:"角色管理"},
+        {path:'/dept',component:Dept,name:"机构管理"},
+        {path:'/log',component:Log,name:"日志管理"},
       ]
     },
  
