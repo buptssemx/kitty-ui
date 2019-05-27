@@ -1,6 +1,6 @@
-# vue 权限管理系统
+# kitty-ui
 
-> A Vue.js project
+> kitty ui project
 
 ## Build Setup
 
