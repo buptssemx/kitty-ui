@@ -1,8 +1,8 @@
 <template>
   <div class="container" :class="$store.state.app.collapse?'menu-bar-collapse-width':'menu-bar-width'">
-    <bread-crumb> </bread-crumb>
+    <bread-crumb></bread-crumb>
     <transition name="fade" mode="out-in">
-      <router-view></router-view>
+        <router-view class="content"></router-view>
     </transition>
   </div>
 </template>
@@ -20,14 +20,19 @@ export default {
 .container {
   position: absolute;
   top: 60px;
-  bottom: 0px;
-  right: 0px;
+  left: 0px;
+  // background: rgba(202, 243, 227, 0.1);
   .breadcrumb {
-    padding: 10px;  
-    border-color: rgba(38, 86, 114, 0.2);
+    padding: 10px;
+    border-color: rgba(148, 145, 147, 0.2);
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    // background: rgba(180, 189, 196, 0.1);
+  }
+  .content {
+    margin-bottom: 5px;
+    padding-top: 5px;
+    margin-left: 2px;
+    // background: rgba(209, 212, 212, 0.1);
   }
 }
 .menu-bar-width {

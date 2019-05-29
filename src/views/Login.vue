@@ -1,6 +1,12 @@
 <template>
   <el-form :model="loginForm" :rules="fieldRules" ref="loginForm" label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">系统登录</h3>
+    <span class="tool-bar">
+      <!-- 主题切换 -->
+      <theme-picker style="float:right;" class="theme-picker" :default="themeColor" @onThemeChange="onThemeChange"></theme-picker>
+      <!-- 语言切换 -->
+      <!-- <lang-selector class="lang-selector"></lang-selector>    -->
+    </span>
+    <h2 class="title" style="padding-left:22px;" >系统登录</h2>
     <el-form-item prop="account">
       <el-input type="text" v-model="loginForm.account" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
@@ -10,49 +16,78 @@
     <!-- <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox> -->
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:48%;" @click.native.prevent="reset">重 置</el-button>
-      <el-button type="primary" style="width:48%;" @click.native.prevent="login" :loading="logining">登 录</el-button>
+      <el-button type="primary" style="width:48%;" @click.native.prevent="login" :loading="loading">登 录</el-button>
     </el-form-item>
   </el-form>
 </template>
 
 <script>
-  import Cookies from "js-cookie";
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        logining: false,
-        loginForm: {
-          account: 'admin',
-          password: '123456'
-        },
-        fieldRules: {
-          account: [
-            { required: true, message: '请输入账号', trigger: 'blur' },
-          ],
-          password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
-          ]
-        },
-        checked: true
-      };
-    },
-    methods: {
-      login() {
-        let userInfo = {account:this.loginForm.account, password:this.loginForm.password}
-        this.$api.login.login(JSON.stringify(userInfo)).then((res) => {
+import { mapState } from 'vuex'
+import Cookies from "js-cookie"
+import ThemePicker from "@/components/ThemePicker"
+import LangSelector from "@/components/LangSelector"
+export default {
+  name: 'Login',
+  components:{
+    ThemePicker,
+    LangSelector
+  },
+  data() {
+    return {
+      loading: false,
+      loginForm: {
+        account: 'admin',
+        password: 'admin'
+      },
+      fieldRules: {
+        account: [
+          { required: true, message: '请输入账号', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+        ]
+      },
+      checked: true
+    }
+  },
+  methods: {
+    login() {
+      this.loading = true
+      let userInfo = {account:this.loginForm.account, password:this.loginForm.password}
+      this.$api.login.login(userInfo).then((res) => {
+          if(res.msg != null) {
+            this.$message({
+              message: res.msg,
+              type: 'error'
+            })
+          } else {
             Cookies.set('token', res.data.token) // 放置token到Cookie
             sessionStorage.setItem('user', userInfo.account) // 保存用户到本地会话
+            this.$store.commit('menuRouteLoaded', false) // 要求重新加载导航菜单
             this.$router.push('/')  // 登录成功，跳转到主页
-          }).catch(function(res) {
-            alert(res);
-          });
-      },
-      reset() {
-        this.$refs.loginForm.resetFields();
-      }
+          }
+          this.loading = false
+        }).catch((res) => {
+          this.$message({
+          message: res.message,
+          type: 'error'
+          })
+        });
+    },
+    reset() {
+      this.$refs.loginForm.resetFields()
+    },
+    // 切换主题
+    onThemeChange: function(themeColor) {
+      this.$store.commit('setThemeColor', themeColor)
     }
+  },
+  computed:{
+    ...mapState({
+      themeColor: state=>state.app.themeColor
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>

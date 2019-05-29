@@ -4,9 +4,11 @@
         "login": "Login",
         "logout": "Logout",
         "doc": "Document",
-        "msgCenter": "Message Center",
+        "blog": "Blog",
+        "projectRepo": "Project Reoposity",
         "myMsg": "My Message",
         "config": "Config",
+        "backup": "Backup|Restore",  
         "exit": "Exit"
     },
     "sys": {

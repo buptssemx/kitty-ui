@@ -28,6 +28,7 @@ export default {
     top: 0px;
     left: 0px;
     right: 0px;
-    background: #b4b3bb80;
+    bottom: 0px;
+    // background: rgba(224, 234, 235, 0.1);
   }
-</style>
+</style>  
