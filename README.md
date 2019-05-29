@@ -4,7 +4,7 @@
 
 1. 下载源码
 
-    git clone https://gitee.com/liuge1988/kitty-ui.git
+    git clone https://github.com/buptssemx/kitty-ui
 
 2. 编译代码
 
